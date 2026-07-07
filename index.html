@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Web Developer</title>
+    <style>
+        *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+        :root { --bg: #0d1117; --card: #161b22; --blue: #58a6ff; --green: #308557; --text: #f0f6fc; --muted: #8b949e; --border: #30363d; }
+        html { scroll-behavior: smooth; }
+        body { font-family: system-ui, -apple-system, Segoe UI, Roboto, sans-serif; background: var(--bg); color: var(--text); line-height: 1.6; }
+        .fi { opacity: 0; transform: translateY(30px); transition: opacity 0.6s, transform 0.6s; }
+        .fi.v { opacity: 1; transform: translateY(0); }
+        nav { position: fixed; top: 0; width: 100%; background: rgba(13,17,23,0.95); backdrop-filter: blur(10px); border-bottom: 1px solid var(--border); z-index: 1000; padding: 1rem 2rem; }
+        nav .c { max-width: 1200px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center; }
+        nav .logo { font-size: 1.5rem; font-weight: 700; color: var(--blue); text-decoration: none; }
+        nav ul { display: flex; gap: 2rem; list-style: none; }
+        nav a { color: var(--muted); text-decoration: none; transition: color 0.3s; }
+        nav a:hover { color: var(--blue); }
+        .c { max-width: 1200px; margin: 0 auto; padding: 0 2rem; }
+        .hero { min-height: 100vh; display: flex; align-items: center; justify-content: center; text-align: center; padding: 6rem 2rem; position: relative; overflow: hidden; }
+        .hero::before { content: ''; position: absolute; top: -50%; left: -50%; width: 200%; height: 200%; background: radial-gradient(circle, rgba(88,166,255,0.05), transparent 50%); animation: pulse 8s infinite; }
+        @keyframes pulse { 0%,100% { transform: scale(1); } 50% { transform: scale(1.1); } }
+        .hero-content { position: relative; z-index: 1; }
+        .hero h1 { font-size: clamp(2rem, 5vw, 3.5rem); font-weight: 700; margin-bottom: 1.5rem; line-height: 1.2; }
+        .hero h1 span { color: var(--blue); }
+        .hero p { font-size: clamp(1rem, 2vw, 1.25rem); color: var(--muted); max-width: 600px; margin: 0 auto 2rem; }
+        .btn { display: inline-flex; align-items: center; gap: 0.5rem; padding: 1rem 2rem; border-radius: 8px; font-size: 1rem; font-weight: 600; text-decoration: none; transition: all 0.3s; cursor: pointer; border: none; }
+        .btn-p { background: var(--blue); color: var(--bg); }
+        .btn-p:hover { background: #79b8ff; transform: translateY(-2px); box-shadow: 0 10px 30px rgba(88,166,255,0.3); }
+        .btn-o { background: transparent; border: 2px solid var(--blue); color: var(--blue); }
+        .btn-o:hover { background: var(--blue); color: var(--bg); }
+        .hero-btns { display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; }
+        section { padding: 6rem 2rem; }
+        .st { text-align: center; margin-bottom: 4rem; }
+        .st h2 { font-size: clamp(1.75rem, 4vw, 2.5rem); margin-bottom: 1rem; }
+        .st p { color: var(--muted); max-width: 600px; margin: 0 auto; }
+        .st .line { width: 60px; height: 4px; background: var(--blue); margin: 1rem auto 0; border-radius: 2px; }
+        .about { background: var(--card); }
+        .about-c { display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: center; }
+        .about-text p { color: var(--muted); margin-bottom: 1.5rem; font-size: 1.1rem; }
+        .ts { display: flex; flex-wrap: wrap; gap: 0.75rem; margin-top: 1.5rem; }
+        .tag { background: rgba(88,166,255,0.1); border: 1px solid rgba(88,166,255,0.3); color: var(--blue); padding: 0.5rem 1rem; border-radius: 20px; font-size: 0.9rem; transition: all 0.3s; }
+        .tag:hover { background: var(--blue); color: var(--bg); }
+        .stats { display: grid; grid-template-columns: repeat(2,1fr); gap: 2rem; }
+        .stat { background: var(--bg); padding: 2rem; border-radius: 12px; text-align: center; border: 1px solid var(--border); transition: all 0.3s; }
+        .stat:hover { border-color: var(--blue); transform: translateY(-5px); }
+        .stat-n { font-size: 2.5rem; font-weight: 700; color: var(--blue); display: block; }
+        .stat-l { color: var(--muted); font-size: 0.9rem; margin-top: 0.5rem; }
+        .sg { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 2rem; }
+        .sc { background: var(--card); padding: 2rem; border-radius: 12px; border: 1px solid var(--border); transition: all 0.3s; }
+        .sc:hover { border-color: var(--blue); transform: translateY(-5px); box-shadow: 0 10px 40px rgba(88,166,255,0.1); }
+        .si { width: 60px; height: 60px; background: rgba(88,166,255,0.1); border-radius: 12px; display: flex; align-items: center; justify-content: center; margin-bottom: 1.5rem; font-size: 1.5rem; }
+        .sc h3 { font-size: 1.25rem; margin-bottom: 0.75rem; }
+        .sc p { color: var(--muted); font-size: 0.95rem; }
+        .portfolio { background: var(--card); }
+        .pg { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 2rem; }
+        .pc { background: var(--bg); border-radius: 12px; overflow: hidden; border: 1px solid var(--border); transition: all 0.3s; }
+        .pc:hover { border-color: var(--blue); transform: translateY(-5px); }
+        .pi { height: 200px; background: linear-gradient(135deg, var(--bg), var(--border)); display: flex; align-items: center; justify-content: center; font-size: 3rem; color: var(--muted); }
+        .pinfo { padding: 1.5rem; }
+        .pinfo h3 { margin-bottom: 0.5rem; }
+        .pinfo p { color: var(--muted); font-size: 0.9rem; margin-bottom: 1rem; }
+        .ptags { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-bottom: 1rem; }
+        .ptag { background: rgba(48,133,87,0.2); color: var(--green); padding: 0.25rem 0.75rem; border-radius: 12px; font-size: 0.8rem; }
+        .tgr { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 2rem; }
+        .tc { background: var(--card); padding: 2rem; border-radius: 12px; border: 1px solid var(--border); position: relative; transition: all 0.3s; }
+        .tc:hover { border-color: var(--blue); }
+        .tc::before { content: '\201C'; position: absolute; top: 1rem; right: 1.5rem; font-size: 4rem; color: var(--blue); opacity: 0.2; font-family: Georgia, serif; }
+        .tt { color: var(--muted); font-style: italic; margin-bottom: 1.5rem; line-height: 1.8; }
+        .ta { display: flex; align-items: center; gap: 1rem; }
+        .tav { width: 50px; height: 50px; border-radius: 50%; background: linear-gradient(135deg, var(--blue), var(--green)); display: flex; align-items: center; justify-content: center; font-weight: 700; color: var(--bg); }
+        .tn { font-weight: 600; }
+        .tr { color: var(--muted); font-size: 0.9rem; }
+        footer { background: var(--card); border-top: 1px solid var(--border); padding: 4rem 2rem 2rem; }
+        .fc { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 3rem; margin-bottom: 3rem; }
+        .fs h4 { margin-bottom: 1.5rem; font-size: 1.1rem; }
+        .fs p, .fs a { color: var(--muted); text-decoration: none; display: block; margin-bottom: 0.75rem; transition: color 0.3s; }
+        .fs a:hover { color: var(--blue); }
+        .sl { display: flex; gap: 1rem; }
+        .sl a { width: 44px; height: 44px; border-radius: 8px; background: var(--bg); border: 1px solid var(--border); display: flex; align-items: center; justify-content: center; color: var(--muted); transition: all 0.3s; }
+        .sl a:hover { border-color: var(--blue); color: var(--blue); transform: translateY(-3px); }
+        .fb { text-align: center; padding-top: 2rem; border-top: 1px solid var(--border); color: var(--muted); font-size: 0.9rem; }
+        .mt { display: none; flex-direction: column; gap: 5px; cursor: pointer; padding: 5px; }
+        .mt span { width: 25px; height: 2px; background: var(--text); transition: all 0.3s; }
+        @media (max-width: 768px) {
+            .mt { display: flex; }
+            nav ul { position: fixed; top: 65px; left: 0; right: 0; background: var(--bg); flex-direction: column; padding: 2rem; gap: 1.5rem; border-bottom: 1px solid var(--border); transform: translateY(-100%); opacity: 0; visibility: hidden; transition: all 0.3s; }
+            nav ul.active { transform: translateY(0); opacity: 1; visibility: visible; }
+            .about-c { grid-template-columns: 1fr; gap: 2rem; }
+            .hero-btns { flex-direction: column; align-items: center; }
+        }
+        @media (max-width: 480px) { .stats, .sg, .pg, .tgr { grid-template-columns: 1fr; } }
+        .contact-form { max-width: 600px; margin: 0 auto; }
+        .form-group { margin-bottom: 1.5rem; }
+        .form-group label { display: block; margin-bottom: 0.5rem; color: var(--text); font-weight: 500; }
+        .form-group input, .form-group textarea { width: 100%; padding: 1rem; background: var(--bg); border: 1px solid var(--border); border-radius: 8px; color: var(--text); font-size: 1rem; font-family: inherit; transition: border-color 0.3s; }
+        .form-group input:focus, .form-group textarea:focus { outline: none; border-color: var(--blue); }
+        .form-group textarea { min-height: 150px; resize: vertical; }
+        .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; }
+        .form-success { display: none; text-align: center; padding: 2rem; background: rgba(48,133,87,0.1); border: 1px solid var(--green); border-radius: 12px; color: var(--green); }
+        .form-success.show { display: block; }
+        @media (max-width: 480px) { .form-row { grid-template-columns: 1fr; } }
+    </style>
+</head>
+<body>
+<nav><div class="c"><a href="#" class="logo">Dev</a><div class="mt" onclick="document.querySelector('nav ul').classList.toggle('active')"><span></span><span></span><span></span></div><ul><li><a href="#about">Обо мне</a></li><li><a href="#services">Услуги</a></li><li><a href="#portfolio">Портфолио</a></li><li><a href="#testimonials">Отзывы</a></li><li><a href="#contact">Контакты</a></li></ul></div></nav>
+
+<section class="hero"><div class="hero-content"><h1>Web Developer:<br><span>создаю быстрые, чистые<br>и удобные сайты</span></h1><p>Превращаю идеи в работающие продукты. Чистый код, современный дизайн.</p><div class="hero-btns"><a href="#contact" class="btn btn-p">Связаться</a><a href="#portfolio" class="btn btn-o">Посмотреть работы</a></div></div></section>
+
+<section id="about" class="about"><div class="c"><div class="about-c"><div class="about-text fi"><h2>Обо мне</h2><p>Я веб-разработчик с более чем 5-летним опытом создания современных веб-приложений. Мой подход — чистый код, внимательность к деталям и ориентация на результат.</p><p>Создаю быстрые, адаптивные и удобные сайты, которые помогают бизнесу расти.</p><div class="ts"><span class="tag">HTML5</span><span class="tag">CSS3</span><span class="tag">JavaScript</span><span class="tag">React</span><span class="tag">Node.js</span><span class="tag">TypeScript</span><span class="tag">Vue.js</span><span class="tag">PostgreSQL</span></div></div><div class="stats fi"><div class="stat"><span class="stat-n">5+</span><span class="stat-l">Лет опыта</span></div><div class="stat"><span class="stat-n">50+</span><span class="stat-l">Проектов</span></div><div class="stat"><span class="stat-n">30+</span><span class="stat-l">Клиентов</span></div><div class="stat"><span class="stat-n">100%</span><span class="stat-l">Сдача в срок</span></div></div></div></div></section>
+
+<section id="services"><div class="c"><div class="st fi"><h2>Услуги</h2><p>Полный цикл разработки от идеи до запуска</p><div class="line"></div></div><div class="sg"><div class="sc fi"><div class="si">🖥</div><h3>Лендинги</h3><p>Одностраничные сайты для продажи услуг и продвижения бренда.</p></div><div class="sc fi"><div class="si">📱</div><h3>Адаптивная вёрстка</h3><p>Кроссбраузерная вёрстка для любых устройств.</p></div><div class="sc fi"><div class="si">⚡</div><h3>Интеграция API</h3><p>Подключение внешних сервисов и баз данных.</p></div><div class="sc fi"><div class="si">🛠</div><h3>Поддержка сайтов</h3><p>Техническая поддержка и обновления.</p></div><div class="sc fi"><div class="si">🚀</div><h3>Оптимизация</h3><p>Ускорение загрузки и SEO-оптимизация.</p></div><div class="sc fi"><div class="si">💡</div><h3>Консультации</h3><p>Технические консультации по проектам.</p></div></div></div></section>
+
+<section id="portfolio" class="portfolio"><div class="c"><div class="st fi"><h2>Портфолио</h2><p>Избранные проекты</p><div class="line"></div></div><div class="pg"><div class="pc fi"><div class="pi">🛒</div><div class="pinfo"><h3>Интернет-магазин</h3><p>Полнофункциональный интернет-магазин с каталогом и корзиной.</p><div class="ptags"><span class="ptag">React</span><span class="ptag">Node.js</span><span class="ptag">MongoDB</span></div><a href="#" class="btn btn-o">Посмотреть проект</a></div></div><div class="pc fi"><div class="pi">📊</div><div class="pinfo"><h3>Дашборд аналитики</h3><p>Панель управления с визуализацией данных в реальном времени.</p><div class="ptags"><span class="ptag">Vue.js</span><span class="ptag">D3.js</span><span class="ptag">PostgreSQL</span></div><a href="#" class="btn btn-o">Посмотреть проект</a></div></div><div class="pc fi"><div class="pi">🏢</div><div class="pinfo"><h3>Корпоративный сайт</h3><p>Современный сайт для IT-компании с CMS и блогом.</p><div class="ptags"><span class="ptag">HTML/CSS</span><span class="ptag">JavaScript</span><span class="ptag">PHP</span></div><a href="#" class="btn btn-o">Посмотреть проект</a></div></div></div></div></section>
+
+<section id="testimonials"><div class="c"><div class="st fi"><h2>Отзывы</h2><p>Что говорят клиенты</p><div class="line"></div></div><div class="tgr"><div class="tc fi"><div class="tt">Проект был выполнен в срок и полностью соответствовал нашим ожиданиям. Качество кода на высшем уровне!</div><div class="ta"><div class="tav">АИ</div><div><div class="tn">Алексей Иванов</div><div class="tr">CEO, TechStart</div></div></div></div><div class="tc fi"><div class="tt">Отличная работа! Сайт работает быстро и выглядит потрясающе. Рекомендую!</div><div class="ta"><div class="tav">МС</div><div><div class="tn">Мария Смирнова</div><div class="tr">Маркетолог, DigitalPro</div></div></div></div><div class="tc fi"><div class="tt">Профессиональный подход и внимание к деталям. Буду обращаться снова!</div><div class="ta"><div class="tav">ДК</div><div><div class="tn">Дмитрий Козлов</div><div class="tr">Основатель, WebStudio</div></div></div></div></div></div></section>
+
+<section id="contact"><div class="c"><div class="st fi"><h2>Контакты</h2><p>Готов обсудить ваш проект</p><div class="line"></div></div><div class="contact-form fi"><form id="contactForm"><div class="form-row"><div class="form-group"><label for="name">Имя</label><input type="text" id="name" name="name" placeholder="Ваше имя" required></div><div class="form-group"><label for="email">Email</label><input type="email" id="email" name="email" placeholder="your@email.com" required></div></div><div class="form-group"><label for="subject">Тема</label><input type="text" id="subject" name="subject" placeholder="Тема сообщения"></div><div class="form-group"><label for="message">Сообщение</label><textarea id="message" name="message" placeholder="Опишите ваш проект..." required></textarea></div><button type="submit" class="btn btn-p" style="width:100%;justify-content:center;">Отправить сообщение</button></form><div class="form-success" id="formSuccess"><h3>Сообщение отправлено!</h3><p>Спасибо за обращение. Я свяжусь с вами в ближайшее время.</p></div></div></div></section>
+
+<footer><div class="c"><div class="fc"><div class="fs"><h4>Dev</h4><p>Создаю быстрые, чистые и удобные сайты.</p></div><div class="fs"><h4>Навигация</h4><a href="#about">Обо мне</a><a href="#services">Услуги</a><a href="#portfolio">Портфолио</a><a href="#testimonials">Отзывы</a></div><div class="fs"><h4>Контакты</h4><p>hello@example.com</p><p>+7 (999) 123-45-67</p><div class="sl"><a href="#">GH</a><a href="#">TG</a><a href="#">LI</a></div></div></div><div class="fb"><p>&copy; 2024 Dev. Все права защищены.</p></div></div></footer>
+
+<script>
+const obs = new IntersectionObserver(e => e.forEach(x => { if(x.isIntersecting) x.target.classList.add('v'); }), { threshold: 0.1 });
+document.querySelectorAll('.fi').forEach(el => obs.observe(el));
+
+document.getElementById('contactForm').addEventListener('submit', function(e) {
+    e.preventDefault();
+    const formData = new FormData(this);
+    const name = formData.get('name');
+    const email = formData.get('email');
+    const subject = formData.get('subject');
+    const message = formData.get('message');
+
+    const mailtoLink = `mailto:hello@example.com?subject=${encodeURIComponent(subject || 'Сообщение с сайта')}&body=${encodeURIComponent(`Имя: ${name}\nEmail: ${email}\n\n${message}`)}`;
+    window.location.href = mailtoLink;
+
+    this.style.display = 'none';
+    document.getElementById('formSuccess').classList.add('show');
+});
+</script>
+</body>
+</html>
